@@ -1,0 +1,15 @@
+iniciar un nuevo repositorio
+
+> git init
+
+agregar los cambios al area de preparación
+
+> git add .
+
+Asignar un mensaje a los cambios
+
+> git commit -m "Proyecto INICIAL"
+
+Para subir los cambios
+
+> git push origin master
