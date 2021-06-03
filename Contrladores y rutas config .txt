@@ -1,0 +1,14 @@
+// en la terminal
+php artisan make:controller CategoriaController -r
+php artisan make:controller ProductoController -r
+php artisan make:controller PedidoController -r
+php artisan make:controller ClienteController -r
+php artisan make:controller UsuarioController -r
+
+// las rutas (api.php)
+
+Route::apiresource("categoria", CategoriaController::class);
+Route::apiresource("producto", ProductoController::class);
+Route::apiresource("pedido", PedidoController::class);
+Route::apiresource("cliente", ClienteController::class);
+Route::apiresource("usuario", UsuarioController::class);
