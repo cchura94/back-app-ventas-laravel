@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Producto;
 
 class ProductoController extends Controller
 {
@@ -13,19 +14,13 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        // select * from productos
+        $productos = Producto::paginate(5);
+
+        return response()->json($productos, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
+ 
     /**
      * Store a newly created resource in storage.
      *
@@ -34,7 +29,23 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validar
+        $request->validate([
+            "nombre" => "required|max:200|min:3",
+            "categoria_id" => "required|exists:categorias,id"
+
+        ]);
+        // guardar
+        $prod = new producto;
+        $prod->nombre = $request->nombre;
+        $prod->precio = $request->precio;
+        $prod->cantidad = $request->cantidad;
+        $prod->descripcion = $request->descripcion;
+        $prod->categoria_id = $request->categoria_id;
+        $prod->save();
+
+        // responder
+        return response()->json(["mensaje" => "Producto Registrado"], 201);
     }
 
     /**
@@ -45,7 +56,8 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        //
+        $producto = Producto::find($id);
+        return response()->json($producto, 200);
     }
 
     /**
