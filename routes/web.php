@@ -12,7 +12,24 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Http\Request;
+use Mail;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get("/enviar_correo", function(){
+    return view("correo");
+});
+
+Route::post("/correo", function(Request $request){
+    
+    // aqui envias el correo
+    /*Mail::send('email',$request->all(), function($msj) use($subject,$for){
+        $msj->from("tucorreo@gmail.com","NombreQueApareceráComoEmisor");
+        $msj->subject($subject);
+        $msj->to($for);
+    });*/
+    return $request;
 });

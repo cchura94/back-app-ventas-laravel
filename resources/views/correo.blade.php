@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>Enviar Correo</h1>
     
     <form action="/correo" method="post">
     @csrf
@@ -19,6 +20,5 @@
         <input type="submit" value="Enviar Correo">
         
     </form>
-
 </body>
 </html>
