@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 use Illuminate\Http\Request;
-use Mail;
+//use Mail;
 
 Route::get('/', function () {
     return view('welcome');
