@@ -32,9 +32,16 @@ class ProductoController extends Controller
         // validar
         $request->validate([
             "nombre" => "required|max:200|min:3",
-            "categoria_id" => "required|exists:categorias,id"
-
+            "categoria_id" => "required|exists:categorias,id",
+            // "imagen" => "file"
         ]);
+        // Subir Imagen
+        $nombre_imagen = "";
+        if($file = $request->file("imagen")){
+            $nombre_imagen = time()."-".$file->getClientOriginalName();
+            $file->move("imagenes", $nombre_imagen);
+            
+        }
         // guardar
         $prod = new producto;
         $prod->nombre = $request->nombre;
@@ -42,6 +49,7 @@ class ProductoController extends Controller
         $prod->cantidad = $request->cantidad;
         $prod->descripcion = $request->descripcion;
         $prod->categoria_id = $request->categoria_id;
+        $prod->imagen = $nombre_imagen;
         $prod->save();
 
         // responder
@@ -60,17 +68,7 @@ class ProductoController extends Controller
         return response()->json($producto, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
+  
     /**
      * Update the specified resource in storage.
      *
@@ -80,7 +78,36 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //return $request;
+        // validar
+        $request->validate([
+            "nombre" => "required|max:200|min:3",
+            "categoria_id" => "required|exists:categorias,id",
+            // "imagen" => "file"
+        ]);
+        
+        // guardar
+        $prod = Producto::find($id);
+        $prod->nombre = $request->nombre;
+        $prod->precio = $request->precio;
+        $prod->cantidad = $request->cantidad;
+        $prod->descripcion = $request->descripcion;
+        $prod->categoria_id = $request->categoria_id;
+
+        // Subir Imagen
+        $nombre_imagen = "";
+        if($file = $request->file("imagen")){
+            $nombre_imagen = time()."-".$file->getClientOriginalName();
+            $file->move("imagenes", $nombre_imagen);
+
+            $prod->imagen = $nombre_imagen;
+        }
+        
+        $prod->save();
+
+        // responder
+        return response()->json(["mensaje" => "Producto Modificado"], 200);
+    
     }
 
     /**
@@ -91,6 +118,8 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $producto = Producto::find($id);
+        $producto->delete();
+        return response()->json(["mensaje" => "Producto Eliminado"], 200);
     }
 }

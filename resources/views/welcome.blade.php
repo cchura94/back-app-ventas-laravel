@@ -8,6 +8,11 @@
 </head>
 <body>
     
+    <a href="https://facebook.com">Salta</a>
+    
+    <a href="{{ url('/correo') }}">URL</a>
+    <a href="{{ path('mi_ruta') }}">URL</a>
+
     <form action="/correo" method="post">
     @csrf
         <label for="">Ingrese su correo</label>

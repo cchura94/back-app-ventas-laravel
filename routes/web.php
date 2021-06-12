@@ -17,7 +17,8 @@ use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name("mi_ruta");
+
 
 Route::get("/enviar_correo", function(){
     return view("correo");

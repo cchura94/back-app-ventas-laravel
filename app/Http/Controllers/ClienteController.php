@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
+use App\Models\Cliente;
 
 class ClienteController extends Controller
 {
@@ -13,17 +14,8 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $clientes = Cliente::get();
+        return response()->json($clientes, 200);
     }
 
     /**
@@ -34,7 +26,21 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validar
+        $request->validate([
+            "nombre_completo" => "required",
+            "ci_nit" => "required",
+            "correo" => "required",
+        ]);
+        //guardar
+        $cliente = new Cliente;
+        $cliente->nombre_completo = $request->nombre_completo;
+        $cliente->ci_nit = $request->ci_nit;
+        $cliente->correo = $request->correo;
+        $cliente->telefono = $request->telefono;
+        $cliente->save();
+
+        return response()->json(["mensaje" => "Cliente registrado", "cliente" => $cliente], 201);
     }
 
     /**
@@ -45,20 +51,11 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        //
+        $cliente = Cliente::find($id);
+        return response()->json($cliente, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
+  
     /**
      * Update the specified resource in storage.
      *
@@ -68,7 +65,21 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $request->validate([
+            "nombre_completo" => "required",
+            "ci_nit" => "required"
+        ]);
+        //guardar
+        $cliente = Cliente::find($id);
+        $cliente->nombre_completo = $request->nombre_completo;
+        $cliente->ci_nit = $request->ci_nit;
+        $cliente->correo = $request->correo;
+        $cliente->telefono = $request->telefono;
+        $cliente->save();
+
+        return redirect()->json(["mensaje" => "Cliente Modificado", "cliente" => $cliente], 200);
+   
     }
 
     /**
@@ -79,6 +90,9 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cliente = Cliente::find($id);
+        $cliente->delete();
+        return redirect()->json(["mensaje" => "Cliente Eliminado"], 200);
+   
     }
 }
