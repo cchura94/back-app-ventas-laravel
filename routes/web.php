@@ -19,6 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name("mi_ruta");
 
+Route::get("/prueba", function(){
+    return response()->json([], 200);
+}); 
 
 Route::get("/enviar_correo", function(){
     return view("correo");
