@@ -15,7 +15,7 @@ class ProductoController extends Controller
     public function index()
     {
         // select * from productos
-        $productos = Producto::paginate(5);
+        $productos = Producto::paginate(20);
 
         return response()->json($productos, 200);
     }
