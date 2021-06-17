@@ -19,8 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post("/auth/login", [AuthController::class, "login"]);
 Route::post("/auth/logout", [AuthController::class, "logout"]);
 
-Route::apiresource("categoria", CategoriaController::class);
-Route::apiresource("producto", ProductoController::class);
-Route::apiresource("pedido", PedidoController::class);
-Route::apiresource("cliente", ClienteController::class);
-Route::apiresource("usuario", UsuarioController::class);
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::apiresource("categoria", CategoriaController::class);
+    Route::apiresource("producto", ProductoController::class);
+    Route::apiresource("pedido", PedidoController::class);
+    Route::apiresource("cliente", ClienteController::class);
+    Route::apiresource("usuario", UsuarioController::class);
+
+});
